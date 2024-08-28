@@ -57,27 +57,24 @@ The `CandyCounter` module is responsible for counting the correct candies detect
 
 - `__init__()`: Initializes the `CandyCounter` class with an empty set to track counted candies.
 - `count_candies(contours)`: Iterates through the contours, counts the correct candies, and prevents double-counting by checking if the candy has already been counted based on its centroid.
-
-  #### Python Code:
-
-     ```python
-          import cv2
-          
-          class CandyCounter:
-              def __init__(self):
-                  self.counted_candies = set()
-          
-              def count_candies(self, contours):
-                  correct_candies = 0
-                  for contour in contours:
-                      M = cv2.moments(contour)
-                      if M['m00'] != 0:
-                          cx = int(M['m10'] / M['m00'])
-                          cy = int(M['m01'] / M['m00'])
-                          if (cx, cy) not in self.counted_candies:
-                              self.counted_candies.add((cx, cy))
-                              correct_candies += 1
-                  return correct_candies
+  ```python
+    import cv2
+    
+    class CandyCounter:
+        def __init__(self):
+            self.counted_candies = set()
+    
+        def count_candies(self, contours):
+            correct_candies = 0
+            for contour in contours:
+                M = cv2.moments(contour)
+                if M['m00'] != 0:
+                    cx = int(M['m10'] / M['m00'])
+                    cy = int(M['m01'] / M['m00'])
+                    if (cx, cy) not in self.counted_candies:
+                        self.counted_candies.add((cx, cy))
+                        correct_candies += 1
+            return correct_candies
 
 This code snippet provides the complete implementation of the CandyCounter module, which is designed to accurately count candies while avoiding duplicate counts. The use of contour moments to identify unique candies is crucial for ensuring accuracy in the counting process.
 
@@ -94,9 +91,6 @@ The `DataLoader` module is responsible for loading the candy count data from a C
 
 - `__init__(csv_path)`: Initializes the `DataLoader` class with the path to the CSV file.
 - `load_data()`: Reads the CSV file and returns a pandas DataFrame containing the image indices and correct candy counts.
-
-#### Python Code:
-
     ```python
     import pandas as pd
     
@@ -125,9 +119,6 @@ The `ImageProcessor` module is responsible for handling the image processing tas
 - `preprocess_image(image)`: Converts the image to grayscale and applies Gaussian blur for noise reduction.
 - `detect_candies(image)`: Applies adaptive thresholding and morphological operations to detect contours representing candies.
 - `filter_candies(contours)`: Filters the contours based on size and shape criteria to ensure only valid candies are considered.
-
-#### Python Code:
-
     ```python
         import cv2
         import numpy as np
